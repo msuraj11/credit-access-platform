@@ -1,18 +1,19 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { User, LogIn, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 
-type Role = {
+export type Role = {
   id: string;
   title: string;
   description: string;
 };
 
-const roles: Role[] = [
+export const roles: Role[] = [
   {
     id: "admin",
     title: "Administrator",
@@ -47,6 +48,7 @@ const roles: Role[] = [
 
 export function RoleSelection() {
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     if (!selectedRole) {
@@ -56,7 +58,12 @@ export function RoleSelection() {
     
     const role = roles.find(r => r.id === selectedRole);
     toast.success(`Logging in as ${role?.title}`);
-    // In a real application, this would trigger authentication
+    
+    // Store role in sessionStorage for use across the app
+    sessionStorage.setItem('userRole', selectedRole);
+    
+    // Navigate to dashboard
+    navigate('/dashboard');
   };
 
   return (
