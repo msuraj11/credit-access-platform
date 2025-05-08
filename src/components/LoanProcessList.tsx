@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
+import { formatDate } from "@/lib/utils";
 
 // Types
 export type LoanStatus = 'Initiation' | 'Processing' | 'Review' | 'Approval' | 'Payment' | 'Completion';
@@ -152,7 +153,7 @@ export function LoanProcessList({ userRole }: LoanProcessListProps) {
               <TableRow key={loan.id}>
                 <TableCell className="font-medium">{loan.id}</TableCell>
                 <TableCell>{loan.customerName}</TableCell>
-                <TableCell>${loan.loanAmount.toLocaleString()}</TableCell>
+                <TableCell>€{loan.loanAmount.toLocaleString()}</TableCell>
                 <TableCell>{loan.purpose}</TableCell>
                 <TableCell>
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -166,7 +167,7 @@ export function LoanProcessList({ userRole }: LoanProcessListProps) {
                     {loan.status}
                   </span>
                 </TableCell>
-                <TableCell>{loan.lastUpdated}</TableCell>
+                <TableCell>{formatDate(loan.lastUpdated)}</TableCell>
                 <TableCell className="text-right">
                   <Button 
                     variant="outline" 

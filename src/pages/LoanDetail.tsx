@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LoanProcess, LoanStatus } from "@/components/LoanProcessList";
+import { formatDate } from "@/lib/utils";
 
 // Sample loan details - this would come from API in a real app
 const loanDetails: { [key: string]: LoanProcess & { 
@@ -211,7 +212,7 @@ const LoanDetail = () => {
               <dl className="space-y-4">
                 <div>
                   <dt className="text-sm font-medium text-muted-foreground">Loan Amount</dt>
-                  <dd className="text-base font-medium">${loan.loanAmount.toLocaleString()}</dd>
+                  <dd className="text-base font-medium">€{loan.loanAmount.toLocaleString()}</dd>
                 </div>
                 <div>
                   <dt className="text-sm font-medium text-muted-foreground">Purpose</dt>
@@ -219,11 +220,11 @@ const LoanDetail = () => {
                 </div>
                 <div>
                   <dt className="text-sm font-medium text-muted-foreground">Application Date</dt>
-                  <dd className="text-base">{loan.timeline[0]?.date || "N/A"}</dd>
+                  <dd className="text-base">{loan.timeline[0]?.date ? formatDate(loan.timeline[0].date) : "N/A"}</dd>
                 </div>
                 <div>
                   <dt className="text-sm font-medium text-muted-foreground">Last Updated</dt>
-                  <dd className="text-base">{loan.lastUpdated}</dd>
+                  <dd className="text-base">{formatDate(loan.lastUpdated)}</dd>
                 </div>
               </dl>
             </CardContent>
@@ -240,7 +241,7 @@ const LoanDetail = () => {
                   <div key={index} className="flex items-center justify-between p-3 bg-muted/50 rounded-md">
                     <div>
                       <p className="font-medium">{doc.name}</p>
-                      <p className="text-xs text-muted-foreground">{doc.uploadDate}</p>
+                      <p className="text-xs text-muted-foreground">{formatDate(doc.uploadDate)}</p>
                     </div>
                     <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
                       {doc.type}
@@ -268,7 +269,7 @@ const LoanDetail = () => {
                     {event.action}
                   </h3>
                   <time className="block mb-2 text-sm font-normal leading-none text-muted-foreground">
-                    {event.date}
+                    {formatDate(event.date)}
                   </time>
                   <p className="text-sm">
                     By {event.user}
