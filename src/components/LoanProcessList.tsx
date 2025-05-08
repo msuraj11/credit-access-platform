@@ -1,5 +1,3 @@
-
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Table, 
@@ -12,105 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
 import { formatDate } from "@/lib/utils";
-
-// Types
-export type LoanStatus = 'Initiation' | 'Processing' | 'Review' | 'Approval' | 'Payment' | 'Completion';
-
-export type LoanProcess = {
-  id: string;
-  customerName: string;
-  loanAmount: number;
-  purpose: string;
-  status: LoanStatus;
-  assignedTo: string;
-  lastUpdated: string;
-};
-
-// Sample data
-const loanProcesses: LoanProcess[] = [
-  {
-    id: "LOAN-2025-001",
-    customerName: "John Smith",
-    loanAmount: 250000,
-    purpose: "Home Purchase",
-    status: "Initiation",
-    assignedTo: "support",
-    lastUpdated: "2025-05-07"
-  },
-  {
-    id: "LOAN-2025-002",
-    customerName: "Emily Johnson",
-    loanAmount: 50000,
-    purpose: "Business Expansion",
-    status: "Processing",
-    assignedTo: "supervisor",
-    lastUpdated: "2025-05-06"
-  },
-  {
-    id: "LOAN-2025-003",
-    customerName: "Michael Williams",
-    loanAmount: 75000,
-    purpose: "Equipment Finance",
-    status: "Review",
-    assignedTo: "trade-finance",
-    lastUpdated: "2025-05-05"
-  },
-  {
-    id: "LOAN-2025-004",
-    customerName: "Sarah Brown",
-    loanAmount: 25000,
-    purpose: "Car Loan",
-    status: "Approval",
-    assignedTo: "supervisor",
-    lastUpdated: "2025-05-04"
-  },
-  {
-    id: "LOAN-2025-005",
-    customerName: "David Wilson",
-    loanAmount: 500000,
-    purpose: "Commercial Property",
-    status: "Payment",
-    assignedTo: "payment",
-    lastUpdated: "2025-05-03"
-  },
-  {
-    id: "LOAN-2025-006",
-    customerName: "Lisa Taylor",
-    loanAmount: 35000,
-    purpose: "Debt Consolidation",
-    status: "Processing",
-    assignedTo: "support",
-    lastUpdated: "2025-05-02"
-  },
-  {
-    id: "LOAN-2025-007",
-    customerName: "James Anderson",
-    loanAmount: 125000,
-    purpose: "Home Renovation",
-    status: "Completion",
-    assignedTo: "crm",
-    lastUpdated: "2025-05-01"
-  },
-  {
-    id: "LOAN-2025-008",
-    customerName: "Patricia Martin",
-    loanAmount: 80000,
-    purpose: "Education Loan",
-    status: "Review",
-    assignedTo: "trade-finance",
-    lastUpdated: "2025-04-30"
-  }
-];
-
-// Role-based access mapping
-const roleAccessMapping: Record<string, (LoanStatus | 'all')[]> = {
-  'admin': ['all'],
-  'support': ['Initiation', 'Processing'],
-  'supervisor': ['Processing', 'Review', 'Approval'],
-  'trade-finance': ['Review', 'Approval'],
-  'payment': ['Approval', 'Payment'],
-  'crm': ['Completion']
-};
+import { loanProcessesData, roleAccessMapping } from '@/data/loanData';
 
 interface LoanProcessListProps {
   userRole: string | null;
@@ -120,7 +20,7 @@ export function LoanProcessList({ userRole }: LoanProcessListProps) {
   const navigate = useNavigate();
   
   // Filter loan processes based on user role
-  const filteredLoans = loanProcesses.filter(loan => {
+  const filteredLoans = loanProcessesData.filter(loan => {
     if (!userRole) return false;
     
     const accessibleStatuses = roleAccessMapping[userRole];
@@ -153,7 +53,7 @@ export function LoanProcessList({ userRole }: LoanProcessListProps) {
               <TableRow key={loan.id}>
                 <TableCell className="font-medium">{loan.id}</TableCell>
                 <TableCell>{loan.customerName}</TableCell>
-                <TableCell>€{loan.loanAmount.toLocaleString()}</TableCell>
+                <TableCell>{loan.loanAmount.toLocaleString()} €</TableCell>
                 <TableCell>{loan.purpose}</TableCell>
                 <TableCell>
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
