@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RoleSelection } from "@/components/RoleSelection";
 import { Card, CardContent } from "@/components/ui/card";
 import Layout from '@/components/Layout';
+import { loanProcessesData } from '@/data/loanData';
 
 const Index = () => {
+  useEffect(() => {
+    sessionStorage.removeItem('userRole');
+    if (!localStorage.getItem('loanData')) {
+      localStorage.setItem('loanData', JSON.stringify(loanProcessesData));
+    }
+  }, [loanProcessesData]);
+
   return (
     <Layout>
       <div className="space-y-12">

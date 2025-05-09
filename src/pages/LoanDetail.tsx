@@ -20,11 +20,12 @@ const LoanDetail = () => {
   const [loan, setLoan] = useState<LoanProcess | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
-  const userRole = sessionStorage.getItem('role') || '';
+  const userRole = sessionStorage.getItem('userRole') || '';
   
   useEffect(() => {
     // Get loan details - would be an API call in a real app
-    const processDetails = loanProcessesData?.find(data => data.id === id);
+    const localLoanData = JSON.parse(localStorage.getItem('loanData'));
+    const processDetails = localLoanData?.find((loan: LoanProcess) => loan.id === id);
     if (id && processDetails) {
       setLoan(processDetails);
     } else {
@@ -61,13 +62,6 @@ const LoanDetail = () => {
       nextStatus = loan.status;
     }
     
-    // Create a new timeline event
-    const newTimelineEvent = {
-      date: new Date().toISOString().split('T')[0],
-      action: `Approved and moved from ${loan.status} to ${nextStatus}`,
-      user: `${userRole === 'admin' ? 'Admin' : 'Supervisor'} (${userRole})`,
-    };
-    
     // Create updated loan object with new status and timeline event
     const updatedLoan = {
       ...loan,
@@ -78,7 +72,7 @@ const LoanDetail = () => {
         timeline: [
           {
             date: new Date().toISOString().split('T')[0],
-            action: `Comment: ${comment}`,
+            action: `Comment: ${comment}, Current status: ${nextStatus}`,
             user: `${userRole === 'admin' ? 'Admin' : 'Supervisor'} (${userRole})`,
           },
           ...loan.details.timeline,
@@ -88,9 +82,11 @@ const LoanDetail = () => {
     
     // Update our loan data (in a real app, this would be an API call)
     // Find index of current loan in the array
-    const loanIndex = loanProcessesData.findIndex(l => l.id === loan.id);
+    const localLoanData = JSON.parse(localStorage.getItem('loanData'));
+    const loanIndex = localLoanData?.findIndex((l: LoanProcess) => l.id === loan.id);
     if (loanIndex !== -1) {
-      loanProcessesData[loanIndex] = updatedLoan;
+      localLoanData[loanIndex] = updatedLoan;
+      localStorage.setItem('loanData', JSON.stringify(localLoanData));
     }
     
     // Update the local state
@@ -102,11 +98,14 @@ const LoanDetail = () => {
       title: "Loan approved successfully",
       description: `Loan status updated to ${nextStatus}`,
     });
+    setTimeout(() => {
+      navigate(-1);
+    }, 10000);
   };
   
   return (
     <Layout>
-      <div className="mb-6">
+      <div className="mb-3">
         <Button 
           variant="outline" 
           onClick={() => navigate('/dashboard')}
@@ -130,7 +129,7 @@ const LoanDetail = () => {
       
       {/* Approval button for supervisor and admin */}
       {canApprove && isApprovableStage && (
-        <div className="mb-6">
+        <div className="flex justify-end mb-4">
           <Button 
             onClick={handleApprove}
             className="bg-loan-primary hover:bg-loan-primary/90"

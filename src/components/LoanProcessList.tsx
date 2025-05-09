@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
-import { formatDate } from "@/lib/utils";
-import { loanProcessesData, roleAccessMapping } from '@/data/loanData';
+import { formatDate, upperFirst } from "@/lib/utils";
+import { LoanProcess, roleAccessMapping } from '@/data/loanData';
 
 interface LoanProcessListProps {
   userRole: string | null;
@@ -20,7 +20,8 @@ export function LoanProcessList({ userRole }: LoanProcessListProps) {
   const navigate = useNavigate();
   
   // Filter loan processes based on user role
-  const filteredLoans = loanProcessesData.filter(loan => {
+  const localLoanData = JSON.parse(localStorage.getItem('loanData'));
+  const filteredLoans = localLoanData?.filter((loan: LoanProcess) => {
     if (!userRole) return false;
     
     const accessibleStatuses = roleAccessMapping[userRole];
@@ -50,13 +51,13 @@ export function LoanProcessList({ userRole }: LoanProcessListProps) {
         </TableHeader>
         <TableBody>
           {filteredLoans.length > 0 ? (
-            filteredLoans.map((loan) => (
+            filteredLoans.map((loan: LoanProcess) => (
               <TableRow key={loan.id}>
                 <TableCell className="font-medium">{loan.id}</TableCell>
                 <TableCell>{loan.loanAccount}</TableCell>
                 <TableCell>{loan.customerName}</TableCell>
                 <TableCell>{loan.agentName || '--'}</TableCell>
-                <TableCell>{loan.assignedTo.charAt(0).toUpperCase() + loan.assignedTo.slice(1)}</TableCell>
+                <TableCell>{upperFirst(loan.assignedTo)}</TableCell>
                 <TableCell>
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
                     loan.status === 'Initiation' ? 'bg-blue-100 text-blue-800' :

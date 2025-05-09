@@ -15,19 +15,27 @@ import {
   XAxis,
   YAxis
 } from "recharts";
-import { LoanStatus, loanProcessesData } from '@/data/loanData';
+import { LoanProcess, LoanStatus, loanProcessesData } from '@/data/loanData';
 
-const getStageValue = (stage: LoanStatus) => loanProcessesData.filter(item => item.status === stage).length;
+const getStageValue = (stage: LoanStatus) => {
+  const localLoanData = JSON.parse(localStorage.getItem('loanData'));
+  return localLoanData?.filter((item: LoanProcess) => item.status === stage).length;
+}
 
 // Stage distribution data
-const stageData = [
-  { name: "Initiation", value: getStageValue('Initiation') },
-  // { name: "Processing", value: 18 },
-  { name: "Review", value: getStageValue('Review') },
-  // { name: "Approval", value: 7 },
-  { name: "Payment", value: getStageValue('Payment') },
-  { name: "Completion", value: getStageValue('Completion') }
-];
+function getStageData(): {
+  name: string;
+  value: number | undefined;
+}[] {
+  return [
+    { name: "Initiation", value: getStageValue('Initiation') },
+    // { name: "Processing", value: 18 },
+    { name: "Review", value: getStageValue('Review') },
+    // { name: "Approval", value: 7 },
+    { name: "Payment", value: getStageValue('Payment') },
+    { name: "Completion", value: getStageValue('Completion') }
+  ];
+}
 
 // Monthly loan volume data
 const monthlyData = [
@@ -54,7 +62,7 @@ export function DashboardCharts() {
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
-                data={stageData}
+                data={getStageData()}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
@@ -64,7 +72,7 @@ export function DashboardCharts() {
                 nameKey="name"
                 label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
               >
-                {stageData.map((entry, index) => (
+                {getStageData().map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>

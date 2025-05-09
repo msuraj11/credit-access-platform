@@ -1,9 +1,9 @@
 
 import React from 'react';
-import { cn } from "@/lib/utils";
+import { cn, upperFirst } from "@/lib/utils";
 import logoUrl from '/euro-currency-sign.svg'
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { LogOut, UserRound } from "lucide-react";
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -33,10 +33,17 @@ export function Header({ className, ...props }: HeaderProps) {
         </Link>
         
         {!isLanding &&
-          <Button variant="outline" size="sm" onClick={handleLogout}>
-            <LogOut className="h-4 w-4 mr-2" />
-            Logout
-          </Button>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center">
+              <UserRound className="h-4 w-4 mr-2" />
+              <div>{upperFirst(sessionStorage.getItem('userRole'))}</div>
+            </div>
+            
+            <Button variant="outline" size="sm" onClick={handleLogout}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
+          </div>
         }
       </div>
     </header>
