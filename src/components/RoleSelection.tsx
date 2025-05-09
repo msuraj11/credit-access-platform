@@ -15,9 +15,9 @@ export type Role = {
 
 export const roles: Role[] = [
   {
-    id: "admin",
-    title: "Administrator",
-    description: "Apps admin with full system access"
+    id: "supervisor",
+    title: "Loan Ops Supervisor",
+    description: "Mid-level operations with 4 eye principle"
   },
   {
     id: "support",
@@ -25,9 +25,9 @@ export const roles: Role[] = [
     description: "First level support for loan operations"
   },
   {
-    id: "supervisor",
-    title: "Loan Ops Supervisor",
-    description: "Mid-level operations with 4 eye principle"
+    id: "payment",
+    title: "Treasury",
+    description: "Back office payment processing"
   },
   {
     id: "trade-finance",
@@ -35,15 +35,15 @@ export const roles: Role[] = [
     description: "Mid-level operations for trade finance"
   },
   {
-    id: "payment",
-    title: "Loan Ops Payment",
-    description: "Back office payment processing"
-  },
-  {
     id: "crm",
     title: "CRM",
     description: "Front office exception handling"
   },
+  {
+    id: "admin",
+    title: "Administrator",
+    description: "Apps admin with full system access"
+  }
 ];
 
 export function RoleSelection() {

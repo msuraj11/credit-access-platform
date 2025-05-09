@@ -1,5 +1,5 @@
 // Types
-export type LoanStatus = 'Initiation' | 'Processing' | 'Review' | 'Approval' | 'Payment' | 'Completion';
+export type LoanStatus = 'Initiation' | 'Review' | 'Payment' | 'Completion';
 
 export interface TimelineEvent {
   date: string;
@@ -29,6 +29,8 @@ export type LoanProcess = {
   status: LoanStatus;
   assignedTo: string;
   lastUpdated: string;
+  loanAccount: string;
+  agentName: string;
   details: LoanDetails;
 };
 
@@ -42,6 +44,8 @@ export const loanProcessesData: LoanProcess[] = [
     status: "Initiation",
     assignedTo: "support",
     lastUpdated: "2025-05-07",
+    loanAccount: 'LN2023123456',
+    agentName: 'Lukas Schneider',
     details: {
       email: "john.smith@example.com",
       phone: "+49 123-4567",
@@ -62,9 +66,11 @@ export const loanProcessesData: LoanProcess[] = [
     customerName: "Emily Johnson",
     loanAmount: 50000,
     purpose: "Business Expansion",
-    status: "Processing",
+    status: "Review",
     assignedTo: "supervisor",
     lastUpdated: "2025-05-06",
+    loanAccount: '480-55678901',
+    agentName: 'Anna Müller',
     details: {
       email: "emily.j@example.com",
       phone: "+49 234-5678",
@@ -90,6 +96,8 @@ export const loanProcessesData: LoanProcess[] = [
     status: "Review",
     assignedTo: "trade-finance",
     lastUpdated: "2025-05-05",
+    loanAccount: 'KD-6598734210',
+    agentName: 'Leon Schäfer',
     details: {
       email: "m.williams@example.com",
       phone: "+49 345-6789",
@@ -114,9 +122,11 @@ export const loanProcessesData: LoanProcess[] = [
     customerName: "Sarah Brown",
     loanAmount: 25000,
     purpose: "Car Loan",
-    status: "Approval",
+    status: "Review",
     assignedTo: "supervisor",
     lastUpdated: "2025-05-04",
+    loanAccount: 'LN1023456789',
+    agentName: '',
     details: {
       email: "sarah.brown@example.com",
       phone: "+49 456-7890",
@@ -145,6 +155,8 @@ export const loanProcessesData: LoanProcess[] = [
     status: "Payment",
     assignedTo: "payment",
     lastUpdated: "2025-05-03",
+    loanAccount: 'LN-DE-2024056789',
+    agentName: 'Clara Lehmann',
     details: {
       email: "d.wilson@example.com",
       phone: "+49 567-8901",
@@ -172,9 +184,11 @@ export const loanProcessesData: LoanProcess[] = [
     customerName: "Lisa Taylor",
     loanAmount: 35000,
     purpose: "Debt Consolidation",
-    status: "Processing",
+    status: "Review",
     assignedTo: "support",
     lastUpdated: "2025-05-02",
+    loanAccount: 'LN8456012398',
+    agentName: 'Paul Becker',
     details: {
       email: "lisa.t@example.com",
       phone: "+49 678-9012",
@@ -200,6 +214,8 @@ export const loanProcessesData: LoanProcess[] = [
     status: "Completion",
     assignedTo: "crm",
     lastUpdated: "2025-05-01",
+    loanAccount: 'ACC-LN-9901234567',
+    agentName: '',
     details: {
       email: "j.anderson@example.com",
       phone: "+49 789-0123",
@@ -232,6 +248,8 @@ export const loanProcessesData: LoanProcess[] = [
     status: "Review",
     assignedTo: "trade-finance",
     lastUpdated: "2025-04-30",
+    loanAccount: 'ZK2024LN089765',
+    agentName: 'Sophie Hoffmann',
     details: {
       email: "p.martin@example.com",
       phone: "+49 890-1234",
@@ -256,19 +274,17 @@ export const loanProcessesData: LoanProcess[] = [
 // Role-based access mapping
 export const roleAccessMapping: Record<string, (LoanStatus | 'all')[]> = {
   'admin': ['all'],
-  'support': ['Initiation', 'Processing'],
-  'supervisor': ['Processing', 'Review', 'Approval'],
-  'trade-finance': ['Review', 'Approval'],
-  'payment': ['Approval', 'Payment'],
+  'support': ['Initiation', 'Review'],
+  'supervisor': ['Review'],
+  'trade-finance': ['Review'],
+  'payment': ['Payment'],
   'crm': ['Completion']
 };
 
 // Mapping of loan status to workflow step number (1-6)
 export const statusToStepMapping: Record<LoanStatus, number> = {
   "Initiation": 1,
-  "Processing": 2,
-  "Review": 3,
-  "Approval": 4,
-  "Payment": 5,
-  "Completion": 6
+  "Review": 2,
+  "Payment": 3,
+  "Completion": 4
 };

@@ -8,11 +8,9 @@ interface LoanProcessVisualProps {
 export function LoanProcessVisual({ currentStep = 4 }: LoanProcessVisualProps) {
   const steps = [
     { title: "Initiation", step: 1 },
-    { title: "Processing", step: 2 },
-    { title: "Review", step: 3 },
-    { title: "Approval", step: 4 },
-    { title: "Payment", step: 5 },
-    { title: "Completion", step: 6 },
+    { title: "Review", step: 2 },
+    { title: "Payment", step: 3 },
+    { title: "Completion", step: 4 },
   ];
   
   const progressPercentage = ((currentStep - 1) / (steps.length - 1)) * 100;
@@ -27,7 +25,7 @@ export function LoanProcessVisual({ currentStep = 4 }: LoanProcessVisualProps) {
           ></div>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 relative">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 relative">
           {steps.map((step) => (
             <div key={step.title} className="flex flex-col items-center">
               <div className={`w-8 h-8 rounded-full flex items-center justify-center z-10 mb-2 ${

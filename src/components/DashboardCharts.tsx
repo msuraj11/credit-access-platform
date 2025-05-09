@@ -15,15 +15,18 @@ import {
   XAxis,
   YAxis
 } from "recharts";
+import { LoanStatus, loanProcessesData } from '@/data/loanData';
+
+const getStageValue = (stage: LoanStatus) => loanProcessesData.filter(item => item.status === stage).length;
 
 // Stage distribution data
 const stageData = [
-  { name: "Initiation", value: 12 },
-  { name: "Processing", value: 18 },
-  { name: "Review", value: 9 },
-  { name: "Approval", value: 7 },
-  { name: "Payment", value: 5 },
-  { name: "Completion", value: 14 }
+  { name: "Initiation", value: getStageValue('Initiation') },
+  // { name: "Processing", value: 18 },
+  { name: "Review", value: getStageValue('Review') },
+  // { name: "Approval", value: 7 },
+  { name: "Payment", value: getStageValue('Payment') },
+  { name: "Completion", value: getStageValue('Completion') }
 ];
 
 // Monthly loan volume data

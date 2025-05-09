@@ -38,10 +38,11 @@ export function LoanProcessList({ userRole }: LoanProcessListProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Loan ID</TableHead>
-            <TableHead>Customer</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>Purpose</TableHead>
+            <TableHead>Case ID</TableHead>
+            <TableHead>Loan Account Number</TableHead>
+            <TableHead>Customer/Borrower</TableHead>
+            <TableHead>Agent Name</TableHead>
+            <TableHead>Support Desk</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Last Updated</TableHead>
             <TableHead className="text-right">Actions</TableHead>
@@ -52,15 +53,14 @@ export function LoanProcessList({ userRole }: LoanProcessListProps) {
             filteredLoans.map((loan) => (
               <TableRow key={loan.id}>
                 <TableCell className="font-medium">{loan.id}</TableCell>
+                <TableCell>{loan.loanAccount}</TableCell>
                 <TableCell>{loan.customerName}</TableCell>
-                <TableCell>{loan.loanAmount.toLocaleString()} €</TableCell>
-                <TableCell>{loan.purpose}</TableCell>
+                <TableCell>{loan.agentName || '--'}</TableCell>
+                <TableCell>{loan.assignedTo.charAt(0).toUpperCase() + loan.assignedTo.slice(1)}</TableCell>
                 <TableCell>
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
                     loan.status === 'Initiation' ? 'bg-blue-100 text-blue-800' :
-                    loan.status === 'Processing' ? 'bg-yellow-100 text-yellow-800' :
                     loan.status === 'Review' ? 'bg-purple-100 text-purple-800' :
-                    loan.status === 'Approval' ? 'bg-orange-100 text-orange-800' :
                     loan.status === 'Payment' ? 'bg-green-100 text-green-800' :
                     'bg-gray-100 text-gray-800'
                   }`}>
