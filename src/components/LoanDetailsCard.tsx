@@ -25,7 +25,7 @@ export function LoanDetailsCard({
         <dl className="space-y-4">
           <div>
             <dt className="text-sm font-medium text-muted-foreground">Loan Amount</dt>
-            <dd className="text-base font-medium">{loanAmount.toLocaleString()} €</dd>
+            <dd className="text-base font-medium">{loanAmount.toLocaleString('de-DE')} €</dd>
           </div>
           <div>
             <dt className="text-sm font-medium text-muted-foreground">Purpose</dt>
