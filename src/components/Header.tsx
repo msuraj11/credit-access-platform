@@ -28,7 +28,7 @@ export function Header({ className, ...props }: HeaderProps) {
             <div className="h-8 w-8 rounded-md bg-loan-primary flex items-center justify-center">
             <img src={logoUrl} alt="Logo" />
             </div>
-            <span className="text-xl font-bold text-loan-dark">LoanAutomation</span>
+            <span className="text-xl font-bold text-loan-dark">Loan App</span>
           </div>
         </Link>
         
