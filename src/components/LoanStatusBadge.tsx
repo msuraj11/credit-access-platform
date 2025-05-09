@@ -12,6 +12,7 @@ export function LoanStatusBadge({ status }: LoanStatusBadgeProps) {
       status === 'Initiation' ? 'bg-blue-100 text-blue-800' :
       status === 'Review' ? 'bg-purple-100 text-purple-800' :
       status === 'Payment' ? 'bg-green-100 text-green-800' :
+      status === 'Completion' ? 'bg-gray-100 text-gray-800' :
       'bg-gray-100 text-gray-800'
     }`}>
       {status}
