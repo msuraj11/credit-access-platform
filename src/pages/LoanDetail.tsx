@@ -9,7 +9,7 @@ import { DocumentsCard } from "@/components/DocumentsCard";
 import { LoanTimelineCard } from "@/components/LoanTimelineCard";
 import { LoanStatusBadge } from "@/components/LoanStatusBadge";
 import { LoanWorkflowCard } from "@/components/LoanWorkflowCard";
-import { loanProcessesData, statusToStepMapping, LoanProcess, LoanStatus } from "@/data/loanData";
+import { statusToStepMapping, LoanProcess, LoanStatus, Roles } from "@/data/loanData";
 import { ApprovalDialog } from "@/components/ApprovalDialog";
 import Layout from '@/components/Layout';
 import { useToast } from "@/hooks/use-toast";
@@ -36,6 +36,9 @@ const LoanDetail = () => {
   if (!loan) {
     return <div>Loading...</div>;
   }
+
+  const loanActionTimelines = loan.details.timeline;
+  const timelineLength = loanActionTimelines?.length;
   
   // Get the current step number for the workflow visual
   const currentStep = statusToStepMapping[loan.status];
@@ -52,19 +55,30 @@ const LoanDetail = () => {
   
   const handleApprovalSubmit = (comment: string) => {
     // Determine the next status based on current status
-    let nextStatus: LoanStatus;
+    let nextStatus: LoanStatus, nextTeamAssignation: Roles;
     if (loan.status === 'Review') {
-      nextStatus = 'Payment';
+      if (['supervisor', 'support'].includes(loan.assignedTo)) {
+        nextTeamAssignation = 'trade-finance';
+        nextStatus = 'Review';
+      } else if (loan.assignedTo === 'trade-finance') {
+        nextTeamAssignation = 'payment';
+        nextStatus = 'Payment';
+      } else {
+        nextTeamAssignation = loan.assignedTo;
+      }
     } else if (loan.status === 'Payment') {
+      nextTeamAssignation = 'crm';
       nextStatus = 'Completion';
     } else {
       // Default case - should not reach here
       nextStatus = loan.status;
+      nextTeamAssignation = loan.assignedTo;
     }
     
     // Create updated loan object with new status and timeline event
     const updatedLoan = {
       ...loan,
+      assignedTo: nextTeamAssignation,
       status: nextStatus,
       lastUpdated: new Date().toISOString().split('T')[0],
       details: {
@@ -72,10 +86,10 @@ const LoanDetail = () => {
         timeline: [
           {
             date: new Date().toISOString().split('T')[0],
-            action: `Comment: ${comment}, Current status: ${nextStatus}`,
+            action: `Comment: ${comment} - Current status: ${nextStatus}`,
             user: `${userRole === 'admin' ? 'Admin' : 'Supervisor'} (${userRole})`,
           },
-          ...loan.details.timeline,
+          ...loanActionTimelines,
         ],
       },
     };
@@ -100,7 +114,7 @@ const LoanDetail = () => {
     });
     setTimeout(() => {
       navigate(-1);
-    }, 10000);
+    }, 5000);
   };
   
   return (
@@ -155,7 +169,7 @@ const LoanDetail = () => {
         <LoanDetailsCard
           loanAmount={loan.loanAmount}
           purpose={loan.purpose}
-          applicationDate={loan.details.timeline[0]?.date}
+          applicationDate={loanActionTimelines[timelineLength - 1]?.date}
           lastUpdated={loan.lastUpdated}
         />
         
@@ -165,7 +179,7 @@ const LoanDetail = () => {
       
       {/* Timeline */}
       <div className="mt-6">
-        <LoanTimelineCard timeline={loan.details.timeline} />
+        <LoanTimelineCard timeline={loanActionTimelines} />
       </div>
       
       {/* Approval Dialog */}

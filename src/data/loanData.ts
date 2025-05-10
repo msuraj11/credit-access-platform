@@ -1,5 +1,6 @@
 // Types
 export type LoanStatus = 'Initiation' | 'Review' | 'Payment' | 'Completion';
+export type Roles = 'admin' | 'support' | 'supervisor' | 'trade-finance' | 'payment' | 'crm';
 
 export interface TimelineEvent {
   date: string;
@@ -27,7 +28,7 @@ export type LoanProcess = {
   loanAmount: number;
   purpose: string;
   status: LoanStatus;
-  assignedTo: string;
+  assignedTo: Roles;
   lastUpdated: string;
   loanAccount: string;
   agentName: string;
@@ -76,10 +77,10 @@ export const loanProcessesData: LoanProcess[] = [
       phone: "+49 234-5678",
       address: "Friedrich-Ebert-Anlage 48, 60325 Frankfurt am Main, Germany",
       timeline: [
-        {date: "2025-05-04", action: "Loan application submitted", user: "System"},
-        {date: "2025-05-05", action: "Documents received", user: "Mike (Support)"},
         {date: "2025-05-06", action: "Initial review completed", user: "Sarah (Support)"},
-        {date: "2025-05-06", action: "Moved to processing", user: "John (Supervisor)"}
+        {date: "2025-05-06", action: "Moved to processing", user: "John (Supervisor)"},
+        {date: "2025-05-05", action: "Documents received", user: "Mike (Support)"},
+        {date: "2025-05-04", action: "Loan application submitted", user: "System"}
       ],
       documents: [
         {name: "Business Plan", type: "PDF", uploadDate: "2025-05-04"},
@@ -103,12 +104,12 @@ export const loanProcessesData: LoanProcess[] = [
       phone: "+49 345-6789",
       address: "Leipziger Straße 34, 60487 Frankfurt am Main, Germany",
       timeline: [
-        {date: "2025-05-01", action: "Loan application submitted", user: "System"},
-        {date: "2025-05-02", action: "Documents received", user: "Laura (Support)"},
-        {date: "2025-05-03", action: "Initial review completed", user: "Mike (Support)"},
-        {date: "2025-05-04", action: "Moved to processing", user: "John (Supervisor)"},
         {date: "2025-05-05", action: "Processing completed", user: "Alice (Supervisor)"},
-        {date: "2025-05-05", action: "Moved to review", user: "Robert (Trade Finance)"}
+        {date: "2025-05-05", action: "Moved to review", user: "Robert (Trade Finance)"},
+        {date: "2025-05-04", action: "Moved to processing", user: "John (Supervisor)"},
+        {date: "2025-05-03", action: "Initial review completed", user: "Mike (Support)"},
+        {date: "2025-05-02", action: "Documents received", user: "Laura (Support)"},
+        {date: "2025-05-01", action: "Loan application submitted", user: "System"}
       ],
       documents: [
         {name: "Equipment Specifications", type: "PDF", uploadDate: "2025-05-01"},
@@ -132,13 +133,13 @@ export const loanProcessesData: LoanProcess[] = [
       phone: "+49 456-7890",
       address: "Hanauer Landstraße 210, 60314 Frankfurt am Main, Germany",
       timeline: [
-        {date: "2025-04-28", action: "Loan application submitted", user: "System"},
-        {date: "2025-04-29", action: "Documents received", user: "Mike (Support)"},
-        {date: "2025-05-01", action: "Initial review completed", user: "Sarah (Support)"},
-        {date: "2025-05-02", action: "Moved to processing", user: "John (Supervisor)"},
-        {date: "2025-05-03", action: "Processing completed", user: "Alice (Supervisor)"},
+        {date: "2025-05-04", action: "Moved to approval", user: "John (Supervisor)"},
         {date: "2025-05-03", action: "Review completed", user: "Robert (Trade Finance)"},
-        {date: "2025-05-04", action: "Moved to approval", user: "John (Supervisor)"}
+        {date: "2025-05-03", action: "Processing completed", user: "Alice (Supervisor)"},
+        {date: "2025-05-02", action: "Moved to processing", user: "John (Supervisor)"},
+        {date: "2025-05-01", action: "Initial review completed", user: "Sarah (Support)"},
+        {date: "2025-04-29", action: "Documents received", user: "Mike (Support)"},
+        {date: "2025-04-28", action: "Loan application submitted", user: "System"}
       ],
       documents: [
         {name: "Car Details", type: "PDF", uploadDate: "2025-04-28"},
@@ -162,14 +163,14 @@ export const loanProcessesData: LoanProcess[] = [
       phone: "+49 567-8901",
       address: "Zeil 67, 60313 Frankfurt am Main, Germany",
       timeline: [
-        {date: "2025-04-20", action: "Loan application submitted", user: "System"},
-        {date: "2025-04-22", action: "Documents received", user: "Laura (Support)"},
-        {date: "2025-04-25", action: "Initial review completed", user: "Mike (Support)"},
-        {date: "2025-04-27", action: "Moved to processing", user: "John (Supervisor)"},
-        {date: "2025-04-29", action: "Processing completed", user: "Alice (Supervisor)"},
-        {date: "2025-05-01", action: "Review completed", user: "Robert (Trade Finance)"},
+        {date: "2025-05-03", action: "Moved to payment", user: "Thomas (Payment)"},
         {date: "2025-05-02", action: "Approval granted", user: "Maria (Director)"},
-        {date: "2025-05-03", action: "Moved to payment", user: "Thomas (Payment)"}
+        {date: "2025-05-01", action: "Review completed", user: "Robert (Trade Finance)"},
+        {date: "2025-04-29", action: "Processing completed", user: "Alice (Supervisor)"},
+        {date: "2025-04-27", action: "Moved to processing", user: "John (Supervisor)"},
+        {date: "2025-04-25", action: "Initial review completed", user: "Mike (Support)"},
+        {date: "2025-04-22", action: "Documents received", user: "Laura (Support)"},
+        {date: "2025-04-20", action: "Loan application submitted", user: "System"}
       ],
       documents: [
         {name: "Property Details", type: "PDF", uploadDate: "2025-04-20"},
@@ -194,10 +195,10 @@ export const loanProcessesData: LoanProcess[] = [
       phone: "+49 678-9012",
       address: "Hedderichstraße 51, 60594 Frankfurt am Main, Germany",
       timeline: [
-        {date: "2025-05-01", action: "Loan application submitted", user: "System"},
-        {date: "2025-05-01", action: "Documents received", user: "Mike (Support)"},
+        {date: "2025-05-02", action: "Moved to processing", user: "Sarah (Support)"},
         {date: "2025-05-02", action: "Initial review completed", user: "Sarah (Support)"},
-        {date: "2025-05-02", action: "Moved to processing", user: "Sarah (Support)"}
+        {date: "2025-05-01", action: "Documents received", user: "Mike (Support)"},
+        {date: "2025-05-01", action: "Loan application submitted", user: "System"}
       ],
       documents: [
         {name: "Credit Card Statements", type: "PDF", uploadDate: "2025-05-01"},
@@ -221,15 +222,15 @@ export const loanProcessesData: LoanProcess[] = [
       phone: "+49 789-0123",
       address: "Am Ginnheimer Wäldchen 8, 60431 Frankfurt am Main, Germany",
       timeline: [
-        {date: "2025-04-01", action: "Loan application submitted", user: "System"},
-        {date: "2025-04-03", action: "Documents received", user: "Laura (Support)"},
-        {date: "2025-04-05", action: "Initial review completed", user: "Mike (Support)"},
-        {date: "2025-04-08", action: "Moved to processing", user: "John (Supervisor)"},
-        {date: "2025-04-12", action: "Processing completed", user: "Alice (Supervisor)"},
-        {date: "2025-04-15", action: "Review completed", user: "Robert (Trade Finance)"},
-        {date: "2025-04-18", action: "Approval granted", user: "Maria (Director)"},
+        {date: "2025-05-01", action: "Loan completed", user: "Rachel (CRM)"},
         {date: "2025-04-22", action: "Payment processed", user: "Thomas (Payment)"},
-        {date: "2025-05-01", action: "Loan completed", user: "Rachel (CRM)"}
+        {date: "2025-04-18", action: "Approval granted", user: "Maria (Director)"},
+        {date: "2025-04-15", action: "Review completed", user: "Robert (Trade Finance)"},
+        {date: "2025-04-12", action: "Processing completed", user: "Alice (Supervisor)"},
+        {date: "2025-04-08", action: "Moved to processing", user: "John (Supervisor)"},
+        {date: "2025-04-05", action: "Initial review completed", user: "Mike (Support)"},
+        {date: "2025-04-03", action: "Documents received", user: "Laura (Support)"},
+        {date: "2025-04-01", action: "Loan application submitted", user: "System"}
       ],
       documents: [
         {name: "Property Details", type: "PDF", uploadDate: "2025-04-01"},
@@ -255,12 +256,12 @@ export const loanProcessesData: LoanProcess[] = [
       phone: "+49 890-1234",
       address: "444 University Ave, College Town, MA 02138",
       timeline: [
-        {date: "2025-04-25", action: "Loan application submitted", user: "System"},
-        {date: "2025-04-26", action: "Documents received", user: "Mike (Support)"},
-        {date: "2025-04-28", action: "Initial review completed", user: "Sarah (Support)"},
-        {date: "2025-04-29", action: "Moved to processing", user: "John (Supervisor)"},
+        {date: "2025-04-30", action: "Moved to review", user: "Robert (Trade Finance)"},
         {date: "2025-04-30", action: "Processing completed", user: "Alice (Supervisor)"},
-        {date: "2025-04-30", action: "Moved to review", user: "Robert (Trade Finance)"}
+        {date: "2025-04-29", action: "Moved to processing", user: "John (Supervisor)"},
+        {date: "2025-04-28", action: "Initial review completed", user: "Sarah (Support)"},
+        {date: "2025-04-26", action: "Documents received", user: "Mike (Support)"},
+        {date: "2025-04-25", action: "Loan application submitted", user: "System"}
       ],
       documents: [
         {name: "University Acceptance Letter", type: "PDF", uploadDate: "2025-04-25"},
@@ -272,7 +273,7 @@ export const loanProcessesData: LoanProcess[] = [
 ];
 
 // Role-based access mapping
-export const roleAccessMapping: Record<string, (LoanStatus | 'all')[]> = {
+export const roleAccessMapping: Record<Roles, (LoanStatus | 'all')[]> = {
   'admin': ['all'],
   'support': ['Initiation', 'Review'],
   'supervisor': ['Review'],

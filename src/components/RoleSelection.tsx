@@ -6,9 +6,10 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { User, LogIn, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+import { Roles } from '@/data/loanData';
 
 export type Role = {
-  id: string;
+  id: Roles;
   title: string;
   description: string;
 };
