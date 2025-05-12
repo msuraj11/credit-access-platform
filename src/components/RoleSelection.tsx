@@ -26,7 +26,7 @@ export const roles: Role[] = [
     description: "First level support for loan operations"
   },
   {
-    id: "payment",
+    id: "treasury",
     title: "Treasury",
     description: "Back office payment processing"
   },

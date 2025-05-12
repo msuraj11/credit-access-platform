@@ -47,9 +47,9 @@ const LoanDetail = () => {
   const canApprove = ['admin', 'supervisor'].includes(userRole);
   
   // Check if loan is in a status that can be approved
-  const isApprovableStage = ['Review', 'Payment'].includes(loan.status);
+  const isApprovableStage = loan.status === 'Review';
   
-  const handleApprove = () => {
+  const handleComplete = () => {
     setIsDialogOpen(true);
   };
   
@@ -57,22 +57,28 @@ const LoanDetail = () => {
     // Determine the next status based on current status
     let nextStatus: LoanStatus, nextTeamAssignation: Roles;
     if (loan.status === 'Review') {
-      if (['supervisor', 'support'].includes(loan.assignedTo)) {
-        nextTeamAssignation = 'trade-finance';
-        nextStatus = 'Review';
-      } else if (loan.assignedTo === 'trade-finance') {
-        nextTeamAssignation = 'payment';
-        nextStatus = 'Payment';
-      } else {
-        nextTeamAssignation = loan.assignedTo;
+      nextStatus = 'Review';
+      switch (loan.assignedTo) {
+        case 'supervisor':
+        case 'support':
+          nextTeamAssignation = 'trade-finance';
+          break;
+
+        case 'trade-finance':
+          nextTeamAssignation = 'treasury';
+          break;
+
+        case 'treasury':
+          nextTeamAssignation = 'crm';
+          break;
+      
+        case 'crm':
+          nextStatus = 'Completion';
+          break;
+
+        default:
+          break;
       }
-    } else if (loan.status === 'Payment') {
-      nextTeamAssignation = 'crm';
-      nextStatus = 'Completion';
-    } else {
-      // Default case - should not reach here
-      nextStatus = loan.status;
-      nextTeamAssignation = loan.assignedTo;
     }
     
     // Create updated loan object with new status and timeline event
@@ -145,10 +151,10 @@ const LoanDetail = () => {
       {canApprove && isApprovableStage && (
         <div className="flex justify-end mb-4">
           <Button 
-            onClick={handleApprove}
+            onClick={handleComplete}
             className="bg-loan-primary hover:bg-loan-primary/90"
           >
-            <CheckCircle className="h-4 w-4 mr-2" /> Approve Loan
+            <CheckCircle className="h-4 w-4 mr-2" /> Complete
           </Button>
         </div>
       )}
@@ -171,6 +177,7 @@ const LoanDetail = () => {
           purpose={loan.purpose}
           applicationDate={loanActionTimelines[timelineLength - 1]?.date}
           lastUpdated={loan.lastUpdated}
+          caseType={loan.caseType}
         />
         
         {/* Documents */}

@@ -18,7 +18,7 @@ const Index = () => {
         {/* Hero Section */}
         <section className="text-center space-y-4">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-loan-dark leading-tight">
-            Loan Automation Platform
+            Loan Process Automation
           </h1>
           <p className="text-2xl text-muted-foreground max-w-3xl mx-auto">
             Streamline your loan processing workflow with our comprehensive banking automation solution

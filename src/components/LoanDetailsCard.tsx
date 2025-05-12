@@ -2,19 +2,22 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
+import { Case } from '@/data/loanData';
 
 interface LoanDetailsCardProps {
   loanAmount: number;
   purpose: string;
   applicationDate?: string;
   lastUpdated: string;
+  caseType: Case
 }
 
 export function LoanDetailsCard({
   loanAmount,
   purpose,
   applicationDate,
-  lastUpdated
+  lastUpdated,
+  caseType
 }: LoanDetailsCardProps) {
   return (
     <Card>
@@ -38,6 +41,10 @@ export function LoanDetailsCard({
           <div>
             <dt className="text-sm font-medium text-muted-foreground">Last Updated</dt>
             <dd className="text-base">{formatDate(lastUpdated)}</dd>
+          </div>
+          <div>
+            <dt className="text-sm font-medium text-muted-foreground">Case Type</dt>
+            <dd className="text-base">{caseType}</dd>
           </div>
         </dl>
       </CardContent>

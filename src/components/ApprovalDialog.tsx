@@ -26,7 +26,7 @@ export function ApprovalDialog({ isOpen, onClose, onSubmit }: ApprovalDialogProp
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Approve Loan</DialogTitle>
+          <DialogTitle>Submit Approval</DialogTitle>
         </DialogHeader>
         
         <div className="py-4">
@@ -51,7 +51,7 @@ export function ApprovalDialog({ isOpen, onClose, onSubmit }: ApprovalDialogProp
             disabled={!isValid} 
             className="bg-loan-primary hover:bg-loan-primary/90"
           >
-            <CheckCircle className="h-4 w-4 mr-2" /> Submit Approval
+            <CheckCircle className="h-4 w-4 mr-2" /> Submit
           </Button>
         </DialogFooter>
       </DialogContent>

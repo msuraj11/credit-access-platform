@@ -24,15 +24,12 @@ const getStageValue = (stage: LoanStatus) => {
 
 // Stage distribution data
 function getStageData(): {
-  name: string;
+  name: LoanStatus;
   value: number | undefined;
 }[] {
   return [
     { name: "Initiation", value: getStageValue('Initiation') },
-    // { name: "Processing", value: 18 },
     { name: "Review", value: getStageValue('Review') },
-    // { name: "Approval", value: 7 },
-    { name: "Payment", value: getStageValue('Payment') },
     { name: "Completion", value: getStageValue('Completion') }
   ];
 }
@@ -70,7 +67,7 @@ export function DashboardCharts() {
                 fill="#8884d8"
                 dataKey="value"
                 nameKey="name"
-                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                label={({ name, percent }) => percent ? `${name}: ${(percent * 100).toFixed(0)}%` : ''}
               >
                 {getStageData().map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

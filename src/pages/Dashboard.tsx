@@ -24,7 +24,7 @@ const Dashboard = () => {
   const roleTitle = userRole ? roles.find(r => r.id === userRole)?.title : '';
   
   // Check if user is admin
-  const isAdmin = userRole === 'admin';
+  const isSupervisor = userRole === 'supervisor';
   
   return (
     <Layout>
@@ -34,7 +34,7 @@ const Dashboard = () => {
       </div>
       
       {/* Admin-only charts */}
-      {isAdmin && (
+      {isSupervisor && (
         <section className="mb-8">
           <h2 className="text-xl font-semibold text-loan-dark mb-4">Performance Overview</h2>
           <DashboardCharts />

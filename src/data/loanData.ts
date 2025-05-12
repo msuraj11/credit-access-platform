@@ -1,6 +1,7 @@
 // Types
-export type LoanStatus = 'Initiation' | 'Review' | 'Payment' | 'Completion';
-export type Roles = 'admin' | 'support' | 'supervisor' | 'trade-finance' | 'payment' | 'crm';
+export type LoanStatus = 'Initiation' | 'Review' | 'Completion';
+export type Roles = 'admin' | 'support' | 'supervisor' | 'trade-finance' | 'treasury' | 'crm';
+export type Case = 'Others' | 'SBLC' | 'Payment' | 'Repricing';
 
 export interface TimelineEvent {
   date: string;
@@ -25,6 +26,7 @@ export interface LoanDetails {
 export type LoanProcess = {
   id: string;
   customerName: string;
+  caseType: Case;
   loanAmount: number;
   purpose: string;
   status: LoanStatus;
@@ -40,6 +42,7 @@ export const loanProcessesData: LoanProcess[] = [
   {
     id: "LOAN-2025-001",
     customerName: "John Smith",
+    caseType: "Others",
     loanAmount: 250000,
     purpose: "Home Purchase",
     status: "Initiation",
@@ -65,6 +68,7 @@ export const loanProcessesData: LoanProcess[] = [
   {
     id: "LOAN-2025-002",
     customerName: "Emily Johnson",
+    caseType: "Payment",
     loanAmount: 50000,
     purpose: "Business Expansion",
     status: "Review",
@@ -92,6 +96,7 @@ export const loanProcessesData: LoanProcess[] = [
   {
     id: "LOAN-2025-003",
     customerName: "Michael Williams",
+    caseType: "SBLC",
     loanAmount: 75000,
     purpose: "Equipment Finance",
     status: "Review",
@@ -121,6 +126,7 @@ export const loanProcessesData: LoanProcess[] = [
   {
     id: "LOAN-2025-004",
     customerName: "Sarah Brown",
+    caseType: "Payment",
     loanAmount: 25000,
     purpose: "Car Loan",
     status: "Review",
@@ -151,10 +157,11 @@ export const loanProcessesData: LoanProcess[] = [
   {
     id: "LOAN-2025-005",
     customerName: "David Wilson",
+    caseType: "Repricing",
     loanAmount: 500000,
     purpose: "Commercial Property",
-    status: "Payment",
-    assignedTo: "payment",
+    status: "Review",
+    assignedTo: "treasury",
     lastUpdated: "2025-05-03",
     loanAccount: 'LN-DE-2024056789',
     agentName: 'Clara Lehmann',
@@ -183,6 +190,7 @@ export const loanProcessesData: LoanProcess[] = [
   {
     id: "LOAN-2025-006",
     customerName: "Lisa Taylor",
+    caseType: "Others",
     loanAmount: 35000,
     purpose: "Debt Consolidation",
     status: "Review",
@@ -210,9 +218,10 @@ export const loanProcessesData: LoanProcess[] = [
   {
     id: "LOAN-2025-007",
     customerName: "James Anderson",
+    caseType: "Payment",
     loanAmount: 125000,
     purpose: "Home Renovation",
-    status: "Completion",
+    status: "Review",
     assignedTo: "crm",
     lastUpdated: "2025-05-01",
     loanAccount: 'ACC-LN-9901234567',
@@ -244,8 +253,9 @@ export const loanProcessesData: LoanProcess[] = [
   {
     id: "LOAN-2025-008",
     customerName: "Patricia Martin",
+    caseType: "SBLC",
     loanAmount: 80000,
-    purpose: "Education Loan",
+    purpose: "Equipment Imports",
     status: "Review",
     assignedTo: "trade-finance",
     lastUpdated: "2025-04-30",
@@ -276,16 +286,15 @@ export const loanProcessesData: LoanProcess[] = [
 export const roleAccessMapping: Record<Roles, (LoanStatus | 'all')[]> = {
   'admin': ['all'],
   'support': ['Initiation', 'Review'],
-  'supervisor': ['Review'],
+  'supervisor': ['all'],
   'trade-finance': ['Review'],
-  'payment': ['Payment'],
-  'crm': ['Completion']
+  'treasury': ['Review'],
+  'crm': ['Review']
 };
 
 // Mapping of loan status to workflow step number (1-6)
 export const statusToStepMapping: Record<LoanStatus, number> = {
   "Initiation": 1,
   "Review": 2,
-  "Payment": 3,
-  "Completion": 4
+  "Completion": 3
 };
