@@ -112,3 +112,8 @@
     @apply border-loan-primary/50;
   }
 }
+
+.pdf-container canvas {
+  max-width: 100%;
+  height: auto !important;
+}

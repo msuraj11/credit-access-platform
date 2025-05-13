@@ -13,12 +13,14 @@ import { statusToStepMapping, LoanProcess, LoanStatus, Roles } from "@/data/loan
 import { ApprovalDialog } from "@/components/ApprovalDialog";
 import Layout from '@/components/Layout';
 import { useToast } from "@/hooks/use-toast";
+import { PdfDialog } from '@/components/PdfDialog';
 
 const LoanDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [loan, setLoan] = useState<LoanProcess | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isPdfDialogOpen, setIsPdfDialogOpen] = useState({isOpen: false, docName: ''});
   const { toast } = useToast();
   const userRole = sessionStorage.getItem('userRole') || '';
   
@@ -48,6 +50,14 @@ const LoanDetail = () => {
   
   // Check if loan is in a status that can be approved
   const isApprovableStage = loan.status === 'Review';
+
+  const handlePdfDialogOpen = (docName: string) => {
+    setIsPdfDialogOpen(prevState => ({...prevState, isOpen: true, docName}));
+  };
+
+  const handlePdfClose = () => {
+    setIsPdfDialogOpen(prevState => ({...prevState, isOpen: false, docName: ''}));
+  }
   
   const handleComplete = () => {
     setIsDialogOpen(true);
@@ -74,6 +84,7 @@ const LoanDetail = () => {
       
         case 'crm':
           nextStatus = 'Completion';
+          nextTeamAssignation = loan.assignedTo;
           break;
 
         default:
@@ -142,7 +153,7 @@ const LoanDetail = () => {
             </p>
           </div>
           <div>
-            <LoanStatusBadge status={loan.status} />
+            <LoanStatusBadge pixels='px-3.5 py-1.5' status={loan.status} />
           </div>
         </div>
       </div>
@@ -181,7 +192,10 @@ const LoanDetail = () => {
         />
         
         {/* Documents */}
-        <DocumentsCard documents={loan.details.documents} />
+        <DocumentsCard
+          documents={loan.details.documents}
+          onPdfClick={handlePdfDialogOpen}
+        />
       </div>
       
       {/* Timeline */}
@@ -194,6 +208,14 @@ const LoanDetail = () => {
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         onSubmit={handleApprovalSubmit}
+      />
+
+      {/* PDF Preview Dialog */}
+      <PdfDialog
+        isOpen={isPdfDialogOpen.isOpen}
+        onClose={handlePdfClose}
+        pdfUrl={`/${isPdfDialogOpen.docName}.pdf`}
+        title={loan.loanAccount}
       />
     </Layout>
   );

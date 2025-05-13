@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
 import { formatDate, upperFirst } from "@/lib/utils";
 import { LoanProcess, roleAccessMapping } from '@/data/loanData';
+import { LoanStatusBadge } from './LoanStatusBadge';
 
 interface LoanProcessListProps {
   userRole: string | null;
@@ -61,13 +62,7 @@ export function LoanProcessList({ userRole }: LoanProcessListProps) {
                 <TableCell>{loan.caseType}</TableCell>
                 <TableCell>{upperFirst(loan.assignedTo)}</TableCell>
                 <TableCell>
-                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    loan.status === 'Initiation' ? 'bg-blue-100 text-blue-800' :
-                    loan.status === 'Review' ? 'bg-purple-100 text-purple-800' :
-                    'bg-green-100 text-green-800'
-                  }`}>
-                    {loan.status}
-                  </span>
+                  <LoanStatusBadge pixels='px-2.5 py-0.5' status={loan.status} />
                 </TableCell>
                 <TableCell>{formatDate(loan.lastUpdated)}</TableCell>
                 <TableCell className="text-right">

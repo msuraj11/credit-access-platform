@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
 
 interface Document {
   name: string;
@@ -11,9 +12,10 @@ interface Document {
 
 interface DocumentsCardProps {
   documents: Document[];
+  onPdfClick: (docName: string) => void;
 }
 
-export function DocumentsCard({ documents }: DocumentsCardProps) {
+export function DocumentsCard({ documents, onPdfClick }: DocumentsCardProps) {
   return (
     <Card>
       <CardHeader>
@@ -27,9 +29,11 @@ export function DocumentsCard({ documents }: DocumentsCardProps) {
                 <p className="font-medium">{doc.name}</p>
                 <p className="text-xs text-muted-foreground">{formatDate(doc.uploadDate)}</p>
               </div>
-              <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
-                {doc.type}
-              </span>
+              <Button variant="outline" onClick={() => onPdfClick(doc.name)}>
+                <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                  {doc.type}
+                </span>
+              </Button>
             </div>
           ))}
         </div>

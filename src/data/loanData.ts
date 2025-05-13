@@ -59,6 +59,7 @@ export const loanProcessesData: LoanProcess[] = [
         {date: "2025-05-07", action: "Documents received", user: "Sarah (Support)"}
       ],
       documents: [
+        {name: "LN2023123456", type: "PDF", uploadDate: "2025-05-07"},
         {name: "Application Form", type: "PDF", uploadDate: "2025-05-07"},
         {name: "Income Verification", type: "PDF", uploadDate: "2025-05-07"},
         {name: "Property Assessment", type: "PDF", uploadDate: "2025-05-07"}
@@ -87,6 +88,7 @@ export const loanProcessesData: LoanProcess[] = [
         {date: "2025-05-04", action: "Loan application submitted", user: "System"}
       ],
       documents: [
+        {name: "480-55678901", type: "PDF", uploadDate: "2025-05-04"},
         {name: "Business Plan", type: "PDF", uploadDate: "2025-05-04"},
         {name: "Financial Statements", type: "PDF", uploadDate: "2025-05-04"},
         {name: "Business License", type: "PDF", uploadDate: "2025-05-05"}
@@ -117,6 +119,7 @@ export const loanProcessesData: LoanProcess[] = [
         {date: "2025-05-01", action: "Loan application submitted", user: "System"}
       ],
       documents: [
+        {name: "KD-6598734210", type: "PDF", uploadDate: "2025-05-01"},
         {name: "Equipment Specifications", type: "PDF", uploadDate: "2025-05-01"},
         {name: "Vendor Quotes", type: "PDF", uploadDate: "2025-05-02"},
         {name: "Business Financials", type: "PDF", uploadDate: "2025-05-03"}
@@ -148,6 +151,7 @@ export const loanProcessesData: LoanProcess[] = [
         {date: "2025-04-28", action: "Loan application submitted", user: "System"}
       ],
       documents: [
+        {name: "LN1023456789", type: "PDF", uploadDate: "2025-04-28"},
         {name: "Car Details", type: "PDF", uploadDate: "2025-04-28"},
         {name: "Income Proof", type: "PDF", uploadDate: "2025-04-29"},
         {name: "Credit Report", type: "PDF", uploadDate: "2025-05-01"}
@@ -180,6 +184,7 @@ export const loanProcessesData: LoanProcess[] = [
         {date: "2025-04-20", action: "Loan application submitted", user: "System"}
       ],
       documents: [
+        {name: "LN-DE-2024056789", type: "PDF", uploadDate: "2025-04-20"},
         {name: "Property Details", type: "PDF", uploadDate: "2025-04-20"},
         {name: "Business Financial Records", type: "PDF", uploadDate: "2025-04-22"},
         {name: "Property Valuation", type: "PDF", uploadDate: "2025-04-25"},
@@ -209,6 +214,7 @@ export const loanProcessesData: LoanProcess[] = [
         {date: "2025-05-01", action: "Loan application submitted", user: "System"}
       ],
       documents: [
+        {name: "LN8456012398", type: "PDF", uploadDate: "2025-05-01"},
         {name: "Credit Card Statements", type: "PDF", uploadDate: "2025-05-01"},
         {name: "Income Verification", type: "PDF", uploadDate: "2025-05-01"},
         {name: "Debt Summary", type: "PDF", uploadDate: "2025-05-02"}
@@ -242,6 +248,7 @@ export const loanProcessesData: LoanProcess[] = [
         {date: "2025-04-01", action: "Loan application submitted", user: "System"}
       ],
       documents: [
+        {name: "ACC-LN-9901234567", type: "PDF", uploadDate: "2025-04-01"},
         {name: "Property Details", type: "PDF", uploadDate: "2025-04-01"},
         {name: "Renovation Plans", type: "PDF", uploadDate: "2025-04-03"},
         {name: "Contractor Quotes", type: "PDF", uploadDate: "2025-04-05"},
@@ -274,6 +281,7 @@ export const loanProcessesData: LoanProcess[] = [
         {date: "2025-04-25", action: "Loan application submitted", user: "System"}
       ],
       documents: [
+        {name: "ZK2024LN089765", type: "PDF", uploadDate: "2025-04-25"},
         {name: "University Acceptance Letter", type: "PDF", uploadDate: "2025-04-25"},
         {name: "Course Fee Details", type: "PDF", uploadDate: "2025-04-26"},
         {name: "Academic Records", type: "PDF", uploadDate: "2025-04-28"}
